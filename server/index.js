@@ -8,14 +8,15 @@ app.use(express.json());
 
 // TODO: hardcode a merkle root here representing the whole nice list
 // paste the hex string in here, without the 0x prefix
-const MERKLE_ROOT = '';
+const MERKLE_ROOT = 'your_merkle__root_here';
 
 app.post('/gift', (req, res) => {
   // grab the parameters from the front-end here
-  const body = req.body;
+  const { name, proof} = req.body;
 
   // TODO: prove that a name is in the list 
-  const isInTheList = false;
+  const isInTheList = verifyProof(proof, name, Buffer.from(MERKLE_ROOT, 'hex'));
+  
   if(isInTheList) {
     res.send("You got a toy robot!");
   }
